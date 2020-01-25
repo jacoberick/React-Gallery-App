@@ -6,7 +6,7 @@ import NotFound from "./components/NotFound";
 import PhotoList from "./components/PhotoList";
 import SearchBar from "./components/SearchBar";
 import apiKey from "./config";
-import { Switch, Route, Link, useParams } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 class App extends Component {
   constructor() {
@@ -17,6 +17,7 @@ class App extends Component {
         tacos: [],
         guitars: []
       },
+      searchQuery: "",
       searchImages: []
     };
 
@@ -43,6 +44,7 @@ class App extends Component {
       )
       .then(response => {
         this.setState({
+          searchQuery: query,
           searchImages: response.data.photos.photo
         });
       })
@@ -51,30 +53,33 @@ class App extends Component {
       });
   };
 
-  UseTag = () => {
-    let { tag } = useParams();
-  };
-
   render() {
+    const state = this.state;
+    const DynamicRoutes = () => {
+      return Object.keys(state.tags).map((tag, idx) => (
+        <Route path={"/" + tag} key={idx}>
+          <div className="main-content">
+            <PhotoList query={tag} data={state.tags[tag]} />
+          </div>
+        </Route>
+      ));
+    };
+
     return (
       <div>
         <div className="main-header">
           <h1>SearchMe!</h1>
           <SearchBar onSearch={this.performSearch} />
-          <Nav routes={this.state.tags} />
+          <Nav routes={state.tags} />
         </div>
 
         <Switch>
           <Route exact path="/">
             <div className="main-content">
-              <h1>Search for photos</h1>
+              <PhotoList query={state.searchQuery} data={state.searchImages} />
             </div>
           </Route>
-          <Route path="/:tag">
-            <div className="main-content">
-              <PhotoList data={this.state.searchImages} />
-            </div>
-          </Route>
+          <DynamicRoutes></DynamicRoutes>
         </Switch>
       </div>
     );

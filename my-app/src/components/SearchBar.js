@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
   state = {
     searchText: ""
   };
@@ -13,6 +14,7 @@ export default class SearchBar extends Component {
     e.preventDefault();
     this.props.onSearch(this.state.searchText);
     e.currentTarget.reset();
+    this.props.history.push(`/?search=${this.state.searchText}`);
   };
 
   render() {
@@ -31,3 +33,5 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+export default withRouter(SearchBar);

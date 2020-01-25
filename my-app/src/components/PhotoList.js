@@ -4,10 +4,20 @@ import Photo from "./Photo";
 const PhotoList = props => {
   const results = props.data;
   let photos = results.map((photo, idx) => <Photo key={idx} data={photo} />);
+  const PhotoHeading = () => {
+    return results.length ? (
+      <h2>Showing photos for {props.query}</h2>
+    ) : (
+      <h2>Search for photos</h2>
+    );
+  };
 
   return (
-    <div className="photo-container">
-      <ul>{photos}</ul>
+    <div className="photos-wrapper">
+      <PhotoHeading />
+      <div className="photo-container">
+        <ul>{photos}</ul>
+      </div>
     </div>
   );
 };
