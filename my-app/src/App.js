@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import axios from "axios";
 import Nav from "./components/Nav";
 import NotFound from "./components/NotFound";
 import PhotoList from "./components/PhotoList";
 import SearchBar from "./components/SearchBar";
 import apiKey from "./config";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
   constructor() {
@@ -52,7 +51,6 @@ class App extends Component {
         console.log("Error fetching and parsing data.", error);
       });
   };
-
   render() {
     const state = this.state;
     const DynamicRoutes = () => {
@@ -68,7 +66,11 @@ class App extends Component {
     return (
       <div>
         <div className="main-header">
-          <h1>SearchMe!</h1>
+          <h1>
+            <a id="SearchMe" href="/">
+              SearchMe!
+            </a>
+          </h1>
           <SearchBar onSearch={this.performSearch} />
           <Nav routes={state.tags} />
         </div>
@@ -79,6 +81,7 @@ class App extends Component {
               <PhotoList query={state.searchQuery} data={state.searchImages} />
             </div>
           </Route>
+          <Route path="/NotFound" component={NotFound} />
           <DynamicRoutes></DynamicRoutes>
         </Switch>
       </div>

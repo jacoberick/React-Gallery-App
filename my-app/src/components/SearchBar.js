@@ -1,15 +1,19 @@
+//search filter component and functionality
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
 class SearchBar extends Component {
+  //initial searchText state
   state = {
     searchText: ""
   };
 
+  //updates searchText state
   onSearchChange = e => {
     this.setState({ searchText: e.target.value });
   };
 
+  //handles search submit
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSearch(this.state.searchText);
@@ -17,6 +21,7 @@ class SearchBar extends Component {
     this.props.history.push(`/?search=${this.state.searchText}`);
   };
 
+  //renders search form and field
   render() {
     return (
       <form className="search-form" onSubmit={this.handleSubmit}>

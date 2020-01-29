@@ -1,6 +1,8 @@
+// photo list component
 import React from "react";
 import Photo from "./Photo";
 
+//maps out photos from Photo component
 const PhotoList = props => {
   const results = props.data;
   let photos = results.map((photo, idx) => <Photo key={idx} data={photo} />);
@@ -12,6 +14,7 @@ const PhotoList = props => {
     );
   };
 
+  // ul construction
   return (
     <div className="photos-wrapper">
       <PhotoHeading />
