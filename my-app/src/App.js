@@ -5,7 +5,7 @@ import NotFound from "./components/NotFound";
 import PhotoList from "./components/PhotoList";
 import SearchBar from "./components/SearchBar";
 import apiKey from "./config";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 
 class App extends Component {
   constructor() {
@@ -42,15 +42,22 @@ class App extends Component {
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&per_page=24&tags=${query}&format=json&nojsoncallback=1`
       )
       .then(response => {
+        let images = response.data.photos.photo;
+
         this.setState({
           searchQuery: query,
-          searchImages: response.data.photos.photo
+          searchImages: images
         });
+
+        return images.length
+          ? this.props.history.push(`/?search=${query}`)
+          : this.props.history.push("/not-found");
       })
       .catch(error => {
         console.log("Error fetching and parsing data.", error);
       });
   };
+
   render() {
     const state = this.state;
     const DynamicRoutes = () => {
@@ -81,12 +88,12 @@ class App extends Component {
               <PhotoList query={state.searchQuery} data={state.searchImages} />
             </div>
           </Route>
-          <Route path="/NotFound" component={NotFound} />
-          <DynamicRoutes></DynamicRoutes>
+          <Route exact path="/not-found" component={NotFound} />
+          <DynamicRoutes />
         </Switch>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

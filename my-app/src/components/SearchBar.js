@@ -1,6 +1,5 @@
 //search filter component and functionality
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 
 class SearchBar extends Component {
   //initial searchText state
@@ -18,7 +17,6 @@ class SearchBar extends Component {
     e.preventDefault();
     this.props.onSearch(this.state.searchText);
     e.currentTarget.reset();
-    this.props.history.push(`/?search=${this.state.searchText}`);
   };
 
   //renders search form and field
@@ -39,4 +37,4 @@ class SearchBar extends Component {
   }
 }
 
-export default withRouter(SearchBar);
+export default SearchBar;
