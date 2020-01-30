@@ -14,7 +14,7 @@ const PhotoList = props => {
     );
   };
 
-  // ul construction
+  // ul containing gallery construction
   return (
     <div className="photos-wrapper">
       <PhotoHeading />

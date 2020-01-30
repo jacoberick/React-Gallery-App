@@ -10,6 +10,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 class App extends Component {
   constructor() {
     super();
+    // initial states for arrays
     this.state = {
       tags: {
         koalas: [],
@@ -20,7 +21,8 @@ class App extends Component {
       searchImages: []
     };
 
-    Object.keys(this.state.tags).map(tag => {
+    // handles requests to API for koalas, tacos, and guitars arrays
+    Object.keys(this.state.tags).forEach(tag => {
       axios
         .get(
           `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&per_page=24&tags=${tag}&format=json&nojsoncallback=1`
@@ -36,6 +38,7 @@ class App extends Component {
     });
   }
 
+  // function that gets photos on search of specific tag
   performSearch = query => {
     axios
       .get(
@@ -49,6 +52,7 @@ class App extends Component {
           searchImages: images
         });
 
+        // if no images are returned the NotFound component is rendered
         return images.length
           ? this.props.history.push(`/?search=${query}`)
           : this.props.history.push("/not-found");
@@ -60,6 +64,7 @@ class App extends Component {
 
   render() {
     const state = this.state;
+    // route rendering for searches
     const DynamicRoutes = () => {
       return Object.keys(state.tags).map((tag, idx) => (
         <Route path={"/" + tag} key={idx}>
@@ -70,6 +75,7 @@ class App extends Component {
       ));
     };
 
+    // construction of main header
     return (
       <div>
         <div className="main-header">
@@ -81,7 +87,7 @@ class App extends Component {
           <SearchBar onSearch={this.performSearch} />
           <Nav routes={state.tags} />
         </div>
-
+        //Router code for PhotoList and NotFound
         <Switch>
           <Route exact path="/">
             <div className="main-content">

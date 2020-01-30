@@ -1,3 +1,7 @@
+config.js file should contain the following code in the my-app directory...
+const apiKey = 'YOUR API KEY';
+export default apiKey;
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
