@@ -87,7 +87,7 @@ class App extends Component {
           <SearchBar onSearch={this.performSearch} />
           <Nav routes={state.tags} />
         </div>
-        //Router code for PhotoList and NotFound
+        {/*Router code for PhotoList and NotFound*/}
         <Switch>
           <Route exact path="/">
             <div className="main-content">
